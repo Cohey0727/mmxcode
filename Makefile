@@ -1,10 +1,10 @@
 PREFIX  ?= $(HOME)/.local
 BIN_DIR := $(PREFIX)/bin
-SCRIPT  := $(BIN_DIR)/minimax
+SCRIPT  := $(BIN_DIR)/mmxcode
 
 ROOT     := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 ENV_FILE := $(ROOT)/.env
-TEMPLATE := $(ROOT)/bin/minimax.template
+TEMPLATE := $(ROOT)/bin/mmxcode.template
 
 .PHONY: install uninstall
 
@@ -16,10 +16,10 @@ install: $(SCRIPT) $(ENV_FILE)
 	@if grep -Eq '^MINIMAX_API_KEY=.+' $(ENV_FILE); then \
 		echo "  MINIMAX_API_KEY: set"; \
 	else \
-		echo "  MINIMAX_API_KEY: NOT SET — edit $(ENV_FILE) before running minimax"; \
+		echo "  MINIMAX_API_KEY: NOT SET — edit $(ENV_FILE) before running mmxcode"; \
 	fi
 	@echo
-	@if ! command -v minimax >/dev/null 2>&1; then \
+	@if ! command -v mmxcode >/dev/null 2>&1; then \
 		echo "  WARNING: $(BIN_DIR) is not on your PATH."; \
 		echo "  Add this to your shell rc:"; \
 		echo "    export PATH=\"$(BIN_DIR):\$$PATH\""; \
@@ -36,7 +36,7 @@ $(BIN_DIR):
 $(ENV_FILE):
 	@cp $(ROOT)/.env.example $@
 	@chmod 600 $@
-	@echo "  Created $@ from .env.example — fill in MINIMAX_API_KEY before running minimax."
+	@echo "  Created $@ from .env.example — fill in MINIMAX_API_KEY before running mmxcode."
 
 uninstall:
 	@rm -f $(SCRIPT)
