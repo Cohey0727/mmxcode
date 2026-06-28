@@ -1,6 +1,6 @@
 # minimax
 
-Installs a global `mmxcode` command that launches Claude Code with MiniMax as the backend.
+Installs a global `minimax` command that launches Claude Code with MiniMax as the backend.
 
 It uses MiniMax's Anthropic-compatible endpoint, so no proxy or translation layer is required.
 
@@ -20,7 +20,7 @@ make install
 This will:
 
 1. Copy `.env.example` to `.env` if it doesn't exist (with `chmod 600`)
-2. Generate `~/.local/bin/mmxcode`, with the absolute path to *this directory's* `.env` baked in
+2. Generate `~/.local/bin/minimax`, with the absolute path to *this directory's* `.env` baked in
 3. Warn you if `~/.local/bin` is not on your PATH
 
 After install, open `.env` and fill in your API key.
@@ -48,7 +48,7 @@ MINIMAX_API_KEY=sk-cp-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 From any directory:
 
 ```bash
-mmxcode
+minimax
 ```
 
 This loads this repo's `.env` and starts Claude Code with MiniMax as the backend.
@@ -56,13 +56,13 @@ This loads this repo's `.env` and starts Claude Code with MiniMax as the backend
 Arguments are passed through to `claude` verbatim:
 
 ```bash
-mmxcode --help
-mmxcode -p "Review my TypeScript type definitions"
+minimax --help
+minimax -p "Review my TypeScript type definitions"
 ```
 
 ## How it works
 
-The `mmxcode` command is a thin shell script. At install time, the absolute path to this directory's `.env`
+The `minimax` command is a thin shell script. At install time, the absolute path to this directory's `.env`
 is baked in. At runtime, it sources that `.env` and exports the Anthropic-compatible variables before
 `exec`-ing `claude`:
 
@@ -79,18 +79,18 @@ before launching `claude`.
 make uninstall
 ```
 
-This removes `~/.local/bin/mmxcode`. The `.env` file is left in place — delete it manually if you no
+This removes `~/.local/bin/minimax`. The `.env` file is left in place — delete it manually if you no
 longer need it.
 
 ## Troubleshooting
 
-**`mmxcode: command not found`**
+**`minimax: command not found`**
 `~/.local/bin` is not on your PATH. Add this to your shell rc (e.g. `~/.zshrc`):
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-**`mmxcode: MINIMAX_API_KEY is empty`**
+**`minimax: MINIMAX_API_KEY is empty`**
 The right-hand side of `MINIMAX_API_KEY=` in `.env` is blank. Fill it in.
 
 **You moved the project to a different directory**
@@ -100,4 +100,4 @@ The script has the old absolute path baked in. Re-run `make install` from the ne
 ```bash
 make install PREFIX=/opt/local
 ```
-This installs to `/opt/local/bin/mmxcode` instead.
+This installs to `/opt/local/bin/minimax` instead.
